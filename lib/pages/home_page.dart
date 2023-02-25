@@ -86,15 +86,15 @@ class SuccessBody extends StatelessWidget {
             flex: 3,
           ),
           Text(
-            Provider.of<WeatherProvider>(context).cityName!,
-            style: TextStyle(
+            BlocProvider.of<WeatherCubit>(context).cityName!,
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             'updated at : ${weatherData!.date.hour.toString()}:${weatherData!.date.minute.toString()}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 22,
             ),
           ),

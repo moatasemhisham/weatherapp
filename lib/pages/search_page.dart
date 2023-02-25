@@ -8,8 +8,9 @@ import 'package:weather_app/services/weather_service.dart';
 
 class SearchPage extends StatelessWidget {
   String? cityName;
-  SearchPage({this.updateUi});
-  VoidCallback? updateUi;
+
+  // SearchPage({this.updateUi});
+  // VoidCallback? updateUi;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +28,7 @@ class SearchPage extends StatelessWidget {
               cityName = data;
               BlocProvider.of<WeatherCubit>(context)
                   .getWeather(cityName: cityName!);
+              BlocProvider.of<WeatherCubit>(context).cityName = cityName;
               Navigator.pop(context);
             },
             decoration: InputDecoration(
@@ -40,9 +42,9 @@ class SearchPage extends StatelessWidget {
                     WeatherModel? weather =
                         await service.getWeather(cityName: cityName!);
 
-                    Provider.of<WeatherProvider>(context, listen: false)
-                        .weatherData = weather;
-                    Provider.of<WeatherProvider>(context, listen: false)
+                    BlocProvider.of<WeatherCubit>(context, listen: false)
+                        .weatherModel = weather;
+                    BlocProvider.of<WeatherCubit>(context, listen: false)
                         .cityName = cityName;
 
                     Navigator.pop(context);
