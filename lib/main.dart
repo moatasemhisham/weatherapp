@@ -11,18 +11,28 @@ import 'BlocObserver.dart';
 void main() {
   Bloc.observer = MyBlocObserver();
 
-  runApp(WeatherApp());
+  runApp(BlocProvider(
+    create: (context) => WeatherCubit(WeatherService()),
+    child: WeatherApp(),
+  ));
 }
 
 class WeatherApp extends StatelessWidget {
+  const WeatherApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => WeatherCubit(WeatherService()),
       child: MaterialApp(
         theme: ThemeData(
-            // primarySwatch: Provider.of<WeatherProvider>(context).weatherData == null ?  Colors.blue : Provider.of<WeatherProvider>(context).weatherData!.getThemeColor()  ,
-            ),
+          primarySwatch:
+              BlocProvider.of<WeatherCubit>(context).weatherModel == null
+                  ? Colors.blue
+                  : BlocProvider.of<WeatherCubit>(context)
+                      .weatherModel!
+                      .getThemeColor(),
+        ),
         home: HomePage(),
       ),
     );
